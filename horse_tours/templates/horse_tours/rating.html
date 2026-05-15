@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Рейтинг тур-компаний</title>
+</head>
+<body>
+    <h1>Средний рейтинг конных туристических компаний</h1>
+    <ul>
+        {% for company in companies %}
+            <li>
+                {{ company.name }} — 
+                {% if company.average_rating %}
+                    ⭐ {{ company.average_rating|floatformat:1 }} / 5
+                {% else %}
+                    Нет отзывов
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
