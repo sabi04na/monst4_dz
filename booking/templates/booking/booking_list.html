@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Записи на тур</title>
+</head>
+<body>
+    <h1>Все записи на конный тур</h1>
+    <a href="{% url 'booking_create' %}">Добавить запись</a>
+    <hr>
+
+    {% for b in bookings %}
+        <div>
+            <h3>{{ b.person.name }} | {{ b.company.name }}</h3>
+            <p>Дата: {{ b.booking_date }}</p>
+            <p>Статус: {{ b.get_status_display }}</p>
+            <a href="{% url 'booking_update' b.id %}">Редактировать</a>
+            <a href="{% url 'booking_delete' b.id %}">Удалить</a>
+            <hr>
+        </div>
+    {% empty %}
+        <p>Пока нет записей</p>
+    {% endfor %}
+</body>
+</html>

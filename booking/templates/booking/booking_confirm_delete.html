@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Удалить запись</title>
+</head>
+<body>
+    <h1>Точно удалить?</h1>
+    <p>{{ booking.person.name }} — {{ booking.company.name }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Да, удалить</button>
+    </form>
+    <a href="{% url 'booking_list' %}">Отмена</a>
+</body>
+</html>
