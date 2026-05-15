@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'horse_tours',
     'booking',
+    'users',
 ]
 
 MIDDLEWARE = [

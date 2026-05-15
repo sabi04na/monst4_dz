@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Список резюме</title>
+</head>
+<body>
+    <h1>Резюме пользователей</h1>
+    <a href="{% url 'resume_create' %}">Добавить новое резюме</a>
+    <hr>
+
+    {% for resume in resumes %}
+        <div>
+            <h2>{{ resume.full_name }}</h2>
+            <p>Возраст: {{ resume.age }}</p>
+            <p>Город: {{ resume.city }}</p>
+            <p>Профессия: {{ resume.profession }}</p>
+            <a href="{% url 'resume_update' resume.id %}">Редактировать</a>
+            <a href="{% url 'resume_delete' resume.id %}">Удалить</a>
+            <hr>
+        </div>
+    {% empty %}
+        <p>Пока нет резюме</p>
+    {% endfor %}
+</body>
+</html>
