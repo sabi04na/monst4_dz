@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+</head>
+<body>
+    <h1>Добро пожаловать, {{ user.username }}!</h1>
+    <p>Это твой защищенный профиль</p>
+    <a href="{% url 'logout' %}">Выйти</a>
+</body>
+</html>

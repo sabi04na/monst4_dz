@@ -1,35 +1,33 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Resume
-from .forms import ResumeForm
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 
-def resume_list(request):
-    resumes = Resume.objects.all()
-    return render(request, 'users/resume_list.html', {'resumes': resumes})
-
-def resume_create(request):
+def register(request):
     if request.method == 'POST':
-        form = ResumeForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('resume_list')
+            return redirect('login')
     else:
-        form = ResumeForm()
-    return render(request, 'users/resume_form.html', {'form': form})
+        form = UserCreationForm()
+    return render(request, 'users/register.html', {'form': form})
 
-def resume_update(request, pk):
-    resume = get_object_or_404(Resume, pk=pk)
+def user_login(request):
     if request.method == 'POST':
-        form = ResumeForm(request.POST, instance=resume)
-        if form.is_valid():
-            form.save()
-            return redirect('resume_list')
-    else:
-        form = ResumeForm(instance=resume)
-    return render(request, 'users/resume_form.html', {'form': form})
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('profile')
+    return render(request, 'users/login.html')
 
-def resume_delete(request, pk):
-    resume = get_object_or_404(Resume, pk=pk)
-    if request.method == 'POST':
-        resume.delete()
-        return redirect('resume_list')
-    return render(request, 'users/resume_delete.html', {'resume': resume})
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect('login')
+
+@login_required
+def profile(request):
+    return render(request, 'users/profile.html', {'user': request.user})
